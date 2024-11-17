@@ -1,0 +1,32 @@
+# Python bytecode
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual environment
+venv/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# IDE/editor directories
+.vscode/
+.idea/
+
+# PyCharm
+*.idea/
+
+# Python distribution and packaging
+build/
+dist/
+*.egg-info/
+
+# Coverage reports
+.coverage
+.coverage.*
+nosetests.xml
+tox.ini
+*.log
+
+tempCodeRunnerFile.py

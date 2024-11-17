@@ -16,3 +16,5 @@ def check_connections():
             connection_status[f'Database {i} ({db_name})'] = f'Connection Failed: {error}'
 
     return jsonify(connection_status)
+
+

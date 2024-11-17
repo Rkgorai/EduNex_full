@@ -1,10 +1,12 @@
 from flask import Flask
 from routes.check_connections import check_connections_blueprint
+from routes.global_schema import global_schema_blueprint
 
 app = Flask(__name__)
 
 # Register blueprints
 app.register_blueprint(check_connections_blueprint)
+app.register_blueprint(global_schema_blueprint, url_prefix='/global-schema')
 
 # Start the Flask app
 if __name__ == '__main__':
