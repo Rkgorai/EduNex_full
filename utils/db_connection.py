@@ -3,9 +3,9 @@ import mysql.connector
 # List of database configurations
 db_configs = [
     {
-        'host': '192.168.42.218',
+        'host': '192.168.41.247',
         'user': 'root',
-        'password': 'rahul',
+        'password': 'Khan7896',
         'database': 'nptel',
     },
     {
@@ -15,9 +15,9 @@ db_configs = [
         'database': 'skill_course_database',
     },
     {
-        'host': '192.168.42.218',
+        'host': '192.168.42.192',
         'user': 'root',
-        'password': 'rahul',
+        'password': 'root',
         'database': 'tutordb',
     },
     {
@@ -46,15 +46,8 @@ def create_connection(config):
             connection.close()
 
 
-# queries = [
-#     "SELECT subject_id AS offering_id, course_name AS title, name AS tutor_name, 'nptel' AS platform_name, 'unknown' AS difficulty_level, 'free' AS price, rating, abstract AS description, 'online' AS Mode, enrolled_role_student AS num_enrollments, 'db3' AS offering_type, 'remote' AS location, 'yes' AS certifications FROM (SELECT * FROM course c JOIN tutors t ON c.tutor_id = t.tutor_id)",
-
-#     "SELECT course_id AS offering_id, course_name AS title, tutor_name, platform_name, difficulty_level, price, rating, description, mode, num_enrollments, 'db2' AS offering_type, 'remote' AS location, 'yes' AS certifications FROM courses",
-
-#     "SELECT center_id AS offering_id, subject_specialisation AS title, tutor_name, centre_name AS platform_name, 'unknown' AS difficulty_level, paid AS price, rating, NULL AS description, 'offline' AS Mode, NULL AS num_enrollments, 'db1' AS offering_type, location, 'no' AS certifications FROM (SELECT * FROM coaching_center c JOIN table_tutor t ON c.centre_id = t.centre_id)"
-# ]
-
 queries = [
+    
     "SELECT subject_id AS offering_id, course_name AS title, name AS tutor_name, 'nptel' AS platform_name, 'unknown' AS difficulty_level, 'free' AS price, 'null' AS rating, abstract AS description, 'online' AS Mode, enrolled_role_student AS num_enrollments, 'db3' AS offering_type, 'remote' AS location, 'yes' AS certifications FROM (SELECT subject_id, course_name, name, abstract, enrolled_role_student FROM nptel.course c JOIN nptel.tutors t ON c.tutor_id = t.tutor_id) AS course_tutors;",
 
     "SELECT course_id AS offering_id, course_name AS title, tutor_name, platform_name, difficulty_level, price, rating, description, mode, num_enrollments, 'db2' AS offering_type, 'remote' AS location, 'yes' AS certifications FROM skill_course_database.courses;",
