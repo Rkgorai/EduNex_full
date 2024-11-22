@@ -47,12 +47,96 @@ def create_connection(config):
 
 
 queries = [
-    
-    "SELECT subject_id AS offering_id, course_name AS title, name AS tutor_name, 'nptel' AS platform_name, 'unknown' AS difficulty_level, 'free' AS price, 'null' AS rating, abstract AS description, 'online' AS Mode, enrolled_role_student AS num_enrollments, 'db3' AS offering_type, 'remote' AS location, 'yes' AS certifications FROM (SELECT subject_id, course_name, name, abstract, enrolled_role_student FROM nptel.course c JOIN nptel.tutors t ON c.tutor_id = t.tutor_id) AS course_tutors;",
+    '''SELECT offering_id, title, tutor_name, platform_name, difficulty_level, price, rating, description, Mode, num_enrollments, offering_type, location, certifications
+    FROM (
+        SELECT subject_id AS offering_id, 
+               course_name AS title, 
+               name AS tutor_name, 
+               'nptel' AS platform_name, 
+               'unknown' AS difficulty_level, 
+               'free' AS price, 
+               'null' AS rating, 
+               abstract AS description, 
+               'online' AS Mode, 
+               enrolled_role_student AS num_enrollments, 
+               'db3' AS offering_type, 
+               'remote' AS location, 
+               'yes' AS certifications 
+        FROM nptel.course c 
+        JOIN nptel.tutors t ON c.tutor_id = t.tutor_id
+    ) AS course_tutors 
+    ''',
 
-    "SELECT course_id AS offering_id, course_name AS title, tutor_name, platform_name, difficulty_level, price, rating, description, Mode, num_enrollments, 'db2' AS offering_type, 'remote' AS location, 'yes' AS certifications FROM skill_course_database.courses;",
+    '''SELECT offering_id, title, tutor_name, platform_name, difficulty_level, price, rating, description, Mode, num_enrollments, offering_type, location, certifications
+    FROM (
+        SELECT course_id AS offering_id, 
+               course_name AS title, 
+               tutor_name, 
+               platform_name, 
+               difficulty_level, 
+               price, 
+               rating*5 as rating, 
+               description, 
+               Mode, 
+               num_enrollments, 
+               'db2' AS offering_type, 
+               'remote' AS location, 
+               'yes' AS certifications 
+        FROM skill_course_database.courses
+    ) AS skill_course_tutors 
+    ''',
 
-    "SELECT centre_id AS offering_id, subject_specialization AS title, tutor_name as tutor_name, platform_name AS platform_name, 'unknown' AS difficulty_level, 'paid' AS price, rating, NULL AS description, 'offline' AS Mode, NULL AS num_enrollments, 'db1' AS offering_type, location, 'no' AS certifications FROM (SELECT c.centre_id as centre_id, t.subject_specialization as subject_specialization, CONCAT(t.first_name, ' ', t.last_name) as tutor_name, c.name as platform_name, c.location as location, c.rating as rating FROM coaching_center c JOIN table_tutor t ON c.centre_id = t.centre_id) AS coaching_tutors;",
+    '''SELECT offering_id, title, tutor_name, platform_name, difficulty_level, price, rating, description, Mode, num_enrollments, offering_type, location, certifications
+    FROM (
+        SELECT c.centre_id AS offering_id,  -- Use alias 'c' for 'coaching_center'
+            t.subject_specialization AS title, 
+            CONCAT(t.first_name, ' ', t.last_name) AS tutor_name,  -- Added concatenation for tutor name
+            c.name AS platform_name, 
+            'unknown' AS difficulty_level, 
+            'paid' AS price, 
+            c.rating,  -- Prefix column with 'c' for 'coaching_center'
+            NULL AS description, 
+            'offline' AS Mode, 
+            NULL AS num_enrollments, 
+            'db1' AS offering_type, 
+            c.location,  -- Prefix column with 'c' for 'coaching_center'
+            'no' AS certifications 
+        FROM coaching_center c 
+        JOIN table_tutor t ON c.centre_id = t.centre_id  -- Prefix 'centre_id' with table alias 'c'
+    ) AS coaching_tutors
+''',
 
-    "SELECT concat(offering_type, ' ', id) AS offering_id, title AS title, 'Null' as tutor_name, category AS platform_name, 'unknown' AS difficulty_level, 'paid' AS price, rating, link AS description, platform AS Mode, NULL AS num_enrollments,'db4' AS offering_type,location,'yes' AS certifications FROM (SELECT * FROM db4.hackathon union select* FROM db4.webinar) AS hackathon_webinar_table;"
+    '''SELECT offering_id, title, tutor_name, platform_name, difficulty_level, price, rating, description, Mode, num_enrollments, offering_type, location, certifications
+    FROM (
+        SELECT CONCAT(offering_type, ' ', id) AS offering_id, 
+               title AS title, 
+               'Null' AS tutor_name, 
+               category AS platform_name, 
+               'unknown' AS difficulty_level, 
+               'paid' AS price, 
+               rating, 
+               link AS description, 
+               platform AS Mode, 
+               NULL AS num_enrollments, 
+               'db4' AS offering_type, 
+               location, 
+               'yes' AS certifications 
+        FROM db4.hackathon 
+        UNION 
+        SELECT CONCAT(offering_type, ' ', id) AS offering_id, 
+               title AS title, 
+               'Null' AS tutor_name, 
+               category AS platform_name, 
+               'unknown' AS difficulty_level, 
+               'paid' AS price, 
+               rating, 
+               link AS description, 
+               platform AS Mode, 
+               NULL AS num_enrollments, 
+               'db4' AS offering_type, 
+               location, 
+               'yes' AS certifications 
+        FROM db4.webinar
+    ) AS hackathon_webinar_table
+    '''
 ]
