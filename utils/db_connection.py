@@ -75,7 +75,7 @@ queries = [
                platform_name, 
                difficulty_level, 
                price, 
-               rating*5 as rating, 
+               rating, 
                description, 
                Mode, 
                num_enrollments, 
@@ -104,7 +104,7 @@ queries = [
         FROM coaching_center c 
         JOIN table_tutor t ON c.centre_id = t.centre_id  -- Prefix 'centre_id' with table alias 'c'
     ) AS coaching_tutors
-''',
+    ''',
 
     '''SELECT offering_id, title, tutor_name, platform_name, difficulty_level, price, rating, description, Mode, num_enrollments, offering_type, location, certifications
     FROM (
