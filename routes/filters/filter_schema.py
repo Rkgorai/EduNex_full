@@ -11,16 +11,16 @@ unique_values_blueprint = Blueprint('unique_values', __name__)
 
 # Define filter criteria
 filters = {
-    "title": "a",  # Use LIKE
-    # "platform_name": "nptel",  # Categorical
-    # "difficulty_level": "all levels",  # Categorical
-    # "price": "free",  # Categorical
-    # "rating": ">4.5",  # Numeric comparison
-    # "Mode": "online",  # Categorical
-    # "num_enrollments": ">1000",  # Numeric comparison
-    # "offering_type": "db3",  # Categorical
-    # "location": "remote",  # Categorical
-    # "certifications": "yes"  # Categorical
+    "title": "algo",
+    "platform_name": ["nptel", "edx"],
+    "difficulty_level": ["all levels", "beginner", "advanced"],
+    # "price": "free",
+    # "rating": ">4.5",
+    # "Mode": "online",
+    # "num_enrollments": ">1000",
+    # "offering_type": ["db3", "db1"],
+    # "location": "remote",
+    "certifications": "yes"
 }
 
 df = fetch_global_schema_data()

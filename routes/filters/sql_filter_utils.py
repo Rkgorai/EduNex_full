@@ -4,8 +4,17 @@ def filter_like(column, value):
     return f"{column} LIKE '%{value}%'"
 
 def filter_categorical(column, value, allowed_values):
-    """Creates a SQL condition for categorical values."""
-    if value in allowed_values:
+    """
+    Creates a SQL condition for categorical values.
+    Handles both single values and lists of values.
+    """
+    if isinstance(value, list):
+        # Filter by multiple values using IN
+        valid_values = [v for v in value if v in allowed_values]
+        if valid_values:
+            return filter_in(column, valid_values)
+    elif value in allowed_values:
+        # Filter by a single value
         return f"{column} = '{value}'"
     return ""
 
