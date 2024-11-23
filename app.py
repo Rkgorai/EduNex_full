@@ -3,6 +3,7 @@ from routes.check_connections import check_connections_blueprint
 from routes.global_schema import global_schema_blueprint
 from routes.filters.filter_schema import filtered_schema_blueprint
 
+
 app = Flask(__name__)
 
 # Register blueprints
