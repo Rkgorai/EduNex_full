@@ -36,17 +36,20 @@ def filter_in(column, values):
 def filter_query_with_functions(base_query, filters, unique_values):
     """
     Adds WHERE conditions to the base SQL query using specific filter functions.
-    
+
     Parameters:
     - base_query (str): The base SQL query.
     - filters (dict): A dictionary where keys are column names and values are filter criteria.
     - unique_values (dict): A dictionary of unique possible values for categorical columns.
-    
+
     Returns:
     - str: The updated SQL query with the WHERE clause.
     """
+    if not filters:  # If no filters, return the base query unchanged
+        return base_query.rstrip(";") + ";"
+
     conditions = []
-    
+
     # Apply filters based on column logic
     for column, value in filters.items():
         if column in ["title", "tutor_name"]:
@@ -77,7 +80,7 @@ def filter_query_with_functions(base_query, filters, unique_values):
     # Remove empty conditions and build the WHERE clause
     conditions = [cond for cond in conditions if cond]
     where_clause = " WHERE " + " AND ".join(conditions) if conditions else ""
-    
+
     # Check if the base query already has a WHERE clause
     if "WHERE" in base_query.upper():
         base_query = base_query.rstrip(";")
