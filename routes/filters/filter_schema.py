@@ -7,6 +7,7 @@ from routes.global_schema import fetch_global_schema_data
 
 # Create a blueprint for the filtered schema
 filtered_schema_blueprint = Blueprint('filtered_schema', __name__)
+unique_values_blueprint = Blueprint('unique_values', __name__)
 
 # Define filter criteria
 filters = {
@@ -55,4 +56,26 @@ def display_filtered_schema():
         return jsonify(filtered_data.to_dict(orient='records'))
     else:
         return jsonify({"message": "No data retrieved from databases."}), 404
+    
+
+@unique_values_blueprint.route('/', methods=['GET'])
+def display_filtered_schema():
+    df = fetch_global_schema_data()
+
+    # Ensure the dataframe is not empty
+    if df.empty:
+        return jsonify({"message": "No data retrieved from databases."}), 404
+
+    # Specify the columns of interest
+    columns_of_interest = ["platform_name", "difficulty_level", "location"]
+
+    # Extract unique values for each column and store them as lists in a dictionary
+    unique_values = {col: df[col].dropna().str.lower().unique().tolist() for col in columns_of_interest}
+
+    # Check if unique values contain any data
+    if all(len(values) > 0 for values in unique_values.values()):
+        return jsonify(unique_values)
+    else:
+        return jsonify({"message": "No unique values found for specified columns."}), 404
+
 

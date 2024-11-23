@@ -6,17 +6,6 @@ from utils.db_utils import fetch_data_from_db
 # Create a blueprint for the global schema
 global_schema_blueprint = Blueprint('global_schema', __name__)
 
-# Collect data from all databases
-# def fetch_global_schema_data():
-#     global_data = pd.DataFrame()
-#     for i, config in enumerate(db_configs):
-#         data = fetch_data_from_db(config, queries[i])
-#         if data is not None and not data.empty:
-#             global_data = pd.concat([global_data, data], ignore_index=True)
-#         else:
-#             print(f"Warning: No data retrieved from database {i + 1}")
-#     return global_data
-
 def fetch_global_schema_data():
     global_data = pd.DataFrame()
     for i, config in enumerate(db_configs):
