@@ -14,6 +14,9 @@ post_filter_blueprint = Blueprint('dummy_filter', __name__)
 # Define the columns of interest
 columns_of_interest = ["platform_name", "difficulty_level", "location"]
 
+# Temporary storage for filters (could use session or database for persistence)
+stored_filters = {}
+
 # Function to fetch filters from dummy endpoint
 def fetch_filters_from_api():
     try:
@@ -47,7 +50,7 @@ def fetch_filtered_schema_data(filters, unique_values):
     for i, config in enumerate(db_configs):
         if i < len(queries):  # Check if there's a corresponding query
             filtered_query = filter_query_with_functions(queries[i], filters, unique_values)
-            print(f"Query for database {i}: {filtered_query}")  # Debugging output
+            # print(f"Query for database {i}: {filtered_query}")  # Debugging output
             data = fetch_data_from_db(config, filtered_query)
             filtered_data = pd.concat([filtered_data, data], ignore_index=True)
         else:
@@ -58,8 +61,8 @@ def fetch_filtered_schema_data(filters, unique_values):
 # Endpoint to display the filtered schema data
 @filtered_schema_blueprint.route('/', methods=['GET'])
 def display_filtered_schema():
-    # Fetch filters from the dummy endpoint
-    filters = fetch_filters_from_api()
+    # Use stored filters from the POST request or fetch from the dummy endpoint
+    filters = stored_filters if stored_filters else fetch_filters_from_api()
 
     if not filters:
         print("No filters provided. Fetching all data...")
@@ -87,19 +90,17 @@ def display_unique_values():
     else:
         return jsonify({"message": "No unique values found for specified columns."}), 404
 
+
 # Dummy filter endpoint
-@post_filter_blueprint.route('/', methods=['GET'])
+@post_filter_blueprint.route('/', methods=['POST'])
 def post_filter_values():
-    filters = {
-        "title": "algo",
-        "platform_name": ["nptel", "udemy","udacity"],
-        # "difficulty_level": ["all levels", "beginner", "advanced"],
-        # "price": "free",
-        # "rating": ">4.5",
-        "Mode": "online",
-        # "num_enrollments": ">1000",
-        # "offering_type": ["db3", "db1"],
-        # "location": "remote",
-        # "certifications": "yes"
-    }
+    # Receive filters from the POST request
+    filters = request.json
+    print("\n\n\nFilters received in POST:", filters)
+
+    # Store filters temporarily for the GET method
+    global stored_filters
+    stored_filters = filters
+
+    # Return the received filters as confirmation
     return jsonify(filters)
