@@ -12,7 +12,7 @@ unique_values_blueprint = Blueprint('unique_values', __name__)
 post_filter_blueprint = Blueprint('dummy_filter', __name__)
 
 # Define the columns of interest
-columns_of_interest = ["platform_name", "difficulty_level", "location","price","Mode","certifications","offering_type"]
+columns_of_interest = ["platform_name", "difficulty_level", "location","price","Mode","certifications","offering_type","rating"]
 
 # Temporary storage for filters (could use session or database for persistence)
 stored_filters = {}
@@ -54,6 +54,14 @@ def get_unique_values():
                 .tolist()
             )
             unique_values[col] = [value for value in unique_values[col] if value in {"online", "offline"}]
+        elif col == "rating":
+            # Only include "online" and "offline" for 'Mode'
+            unique_values[col] = (
+                df[col]
+                .dropna()
+                .unique()
+                .tolist()
+            )
         else:
             # Include all unique values for other columns
             unique_values[col] = (
@@ -130,7 +138,6 @@ def display_unique_values():
 def post_filter_values():
     # Receive filters from the POST request
     filters = request.json
-    # print("\n\n\nFilters received in POST:", filters)
 
     # Store filters temporarily for the GET method
     global stored_filters
