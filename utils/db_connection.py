@@ -95,7 +95,7 @@ queries = [
                'nptel' AS platform_name, 
                'unknown' AS difficulty_level, 
                'free' AS price, 
-               'null' AS rating, 
+               rating AS rating, 
                abstract AS description, 
                'online' AS Mode, 
                enrolled_role_student AS num_enrollments, 
