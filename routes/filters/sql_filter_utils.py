@@ -66,8 +66,8 @@ def filter_query_with_functions(base_query, filters, unique_values):
                 continue
             if value[0] == "free":
                 conditions.append(filter_categorical(column, value, ["free"]))
-            elif value[0] == "paid":
-                updated_q = base_query.rstrip(";") + " WHERE price <> 'free';"
+            else:
+                updated_q ="price not in ('free');"
                 conditions.append(updated_q)
         elif column == "rating" or column == "num_enrollments":
             # Numeric comparisons
@@ -92,5 +92,5 @@ def filter_query_with_functions(base_query, filters, unique_values):
         updated_query = f"{base_query} AND {where_clause[7:]} ORDER BY rating desc;"
     else:
         updated_query = base_query.rstrip(";") + where_clause + " ORDER BY rating desc;"
-
+    # print("\n\n\n",updated_query)
     return updated_query

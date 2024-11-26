@@ -130,7 +130,7 @@ def display_unique_values():
 def post_filter_values():
     # Receive filters from the POST request
     filters = request.json
-    print("\n\n\nFilters received in POST:", filters)
+    # print("\n\n\nFilters received in POST:", filters)
 
     # Store filters temporarily for the GET method
     global stored_filters
