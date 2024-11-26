@@ -12,7 +12,7 @@ unique_values_blueprint = Blueprint('unique_values', __name__)
 post_filter_blueprint = Blueprint('dummy_filter', __name__)
 
 # Define the columns of interest
-columns_of_interest = ["platform_name", "difficulty_level", "location","price"]
+columns_of_interest = ["platform_name", "difficulty_level", "location","price","Mode","certifications","offering_type"]
 
 # Temporary storage for filters (could use session or database for persistence)
 stored_filters = {}
@@ -28,7 +28,6 @@ def fetch_filters_from_api():
         return {}
 
 # Function to fetch unique values
-# Function to fetch unique values
 def get_unique_values():
     df = fetch_global_schema_data()
 
@@ -38,14 +37,23 @@ def get_unique_values():
             # Only include non-numerical (categorical) values for 'price'
             unique_values[col] = (
                 df[col]
-        .dropna()
-        .apply(lambda x: x if isinstance(x, str) and not x.isdigit() else None)
-        .dropna()
-        .str.lower()
-        .unique()
-        .tolist()
-
+                .dropna()
+                .apply(lambda x: x if isinstance(x, str) and not x.isdigit() else None)
+                .dropna()
+                .str.lower()
+                .unique()
+                .tolist()
             )
+        elif col == "Mode":
+            # Only include "online" and "offline" for 'Mode'
+            unique_values[col] = (
+                df[col]
+                .dropna()
+                .str.lower()
+                .unique()
+                .tolist()
+            )
+            unique_values[col] = [value for value in unique_values[col] if value in {"online", "offline"}]
         else:
             # Include all unique values for other columns
             unique_values[col] = (
@@ -55,8 +63,8 @@ def get_unique_values():
                 .unique()
                 .tolist()
             )
-    #print(unique_values)
     return unique_values
+
 
 
 # Function to fetch filtered schema data
