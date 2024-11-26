@@ -1,4 +1,3 @@
-
 def filter_like(column, value):
     """Creates a SQL condition using LIKE."""
     return f"{column} LIKE '%{value}%'"
@@ -63,7 +62,13 @@ def filter_query_with_functions(base_query, filters, unique_values):
                 conditions.append(condition)
         elif column == "price":
             # Categorical value for 'free' or 'paid'
-            conditions.append(filter_categorical(column, value, ["free", "paid"]))
+            if len(value) == 2:
+                continue
+            if value[0] == "free":
+                conditions.append(filter_categorical(column, value, ["free"]))
+            elif value[0] == "paid":
+                updated_q = base_query.rstrip(";") + " WHERE price <> 'free';"
+                conditions.append(updated_q)
         elif column == "rating" or column == "num_enrollments":
             # Numeric comparisons
             conditions.append(filter_numeric(column, value))
@@ -84,8 +89,8 @@ def filter_query_with_functions(base_query, filters, unique_values):
     # Check if the base query already has a WHERE clause
     if "WHERE" in base_query.upper():
         base_query = base_query.rstrip(";")
-        updated_query = f"{base_query} AND {where_clause[7:]};"
+        updated_query = f"{base_query} AND {where_clause[7:]} ORDER BY rating desc;"
     else:
-        updated_query = base_query.rstrip(";") + where_clause + ";"
+        updated_query = base_query.rstrip(";") + where_clause + " ORDER BY rating desc;"
 
     return updated_query
