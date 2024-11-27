@@ -71,13 +71,14 @@ def filter_query_with_functions(base_query, filters, unique_values):
                 conditions.append(updated_q)
         elif column == "rating" or column == "num_enrollments":
             # Numeric comparisons
+            value = value[0]
             conditions.append(filter_numeric(column, value))
         elif column == "Mode":
             # Categorical value for 'online' or 'offline'
             conditions.append(filter_categorical(column, value, ["online", "offline"]))
         elif column == "offering_type":
             # Categorical value for 'db1', 'db2', 'db3'
-            conditions.append(filter_categorical(column, value, ["db1", "db2", "db3"]))
+            conditions.append(filter_categorical(column, value, ["db1", "db2", "db3","db4"]))
         elif column == "certifications":
             # Categorical value for 'yes' or 'no'
             conditions.append(filter_categorical(column, value, ["yes", "no"]))

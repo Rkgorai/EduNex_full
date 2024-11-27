@@ -83,7 +83,7 @@ export const Home: React.FC = () => {
     if (selectedFilters["rating"]) {
       const ratingValue = selectedFilters["rating"][0];
       console.log("rating value = ", ratingValue);
-      sanitizedFilters["rating"] = [">" + ratingValue];
+      sanitizedFilters["rating"] = [">=" + ratingValue];
     }
     const payload = {
       [searchBy]: query.trim(),
