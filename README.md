@@ -7,7 +7,7 @@ EduNex is a platform designed to bridge the gap between students, professionals,
 - **Personalized Learning**: Matches users with tutors and courses based on location, skill level, and aspirations.
 - **Search and Filter Options**: Advanced search bar and dynamic filters to refine results for courses and tutors.
 - **Real-time Updates**: Displays up-to-date information on courses, tutors, and events.
-- **Event Discovery**: Enables users to find and register for webinars, hackathons, and skill-development programs.
+  
 
 ## Technologies Used
 
