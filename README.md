@@ -28,7 +28,7 @@
 
 ## Here is the relationnhsips among the database as well database design
 
-<img width="985" alt="Screenshot 2025-06-26 at 3 31 48 PM" src="https://github.com/user-attachments/assets/0a20336c-18ac-4646-be98-22eab9999c24" /># EduNex
+<img width="985" alt="Screenshot 2025-06-26 at 3 31 48 PM" src="https://github.com/user-attachments/assets/0a20336c-18ac-4646-be98-22eab9999c24" />
 
 ## Project Setup
 
