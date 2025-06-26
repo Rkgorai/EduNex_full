@@ -1,4 +1,4 @@
-<img width="985" alt="Screenshot 2025-06-26 at 3 31 48 PM" src="https://github.com/user-attachments/assets/0a20336c-18ac-4646-be98-22eab9999c24" /># EduNex
+
 
 EduNex is a platform designed to bridge the gap between students, professionals, and high-quality educational resources in India. It connects users to personalized tutors, courses, and skill development programs, enhancing accessibility and efficiency in learning. The project is especially beneficial for users in Tier 2 and Tier 3 cities, addressing the growing demand for upskilling and quality education.
 
@@ -28,7 +28,7 @@ EduNex is a platform designed to bridge the gap between students, professionals,
 
 ## Here is the relationnhsips among the database as well database design
 
-<img width="985" alt="Screenshot 2025-06-26 at 3 32 14 PM" src="https://github.com/user-attachments/assets/717017cc-62bc-4f34-8573-a85ca7e93d89" />
+<img width="985" alt="Screenshot 2025-06-26 at 3 31 48 PM" src="https://github.com/user-attachments/assets/0a20336c-18ac-4646-be98-22eab9999c24" /># EduNex
 
 ## Project Setup
 
